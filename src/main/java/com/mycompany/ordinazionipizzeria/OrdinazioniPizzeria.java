@@ -1,5 +1,7 @@
 package com.mycompany.ordinazionipizzeria;
 
+import java.util.Stack;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -8,11 +10,33 @@ import javax.swing.JOptionPane;
  */
 public class OrdinazioniPizzeria extends javax.swing.JFrame {
 
+    DefaultListModel<String> ingredientsModel;
+    DefaultListModel<String> selectedModel;
+    Stack<String> removedElement;
+    int count = 0;
     /**
      * Creates new form OrdinazioniPizzeria
      */
     public OrdinazioniPizzeria() {
         initComponents();
+        
+        orderPanel.setVisible(false);
+        
+        ingredientsModel = new DefaultListModel<>();
+        selectedModel = new DefaultListModel<>();
+        elementList.setModel(ingredientsModel);
+        addedElementList.setModel(selectedModel);
+        removedElement = new Stack<>();
+        
+        ingredientsModel.addElement("Pomodoro");
+        ingredientsModel.addElement("Mozzarella");
+        ingredientsModel.addElement("Impasto");
+        ingredientsModel.addElement("Funghi");
+        ingredientsModel.addElement("Prosciutto");
+        ingredientsModel.addElement("Olive");
+        ingredientsModel.addElement("Peperoni");
+        ingredientsModel.addElement("Ananas");
+        ingredientsModel.addElement("Salame");
     }
 
     /**
@@ -31,6 +55,11 @@ public class OrdinazioniPizzeria extends javax.swing.JFrame {
         authButton = new javax.swing.JButton();
         orderPanel = new javax.swing.JPanel();
         welcomeText = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        elementList = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        addedElementList = new javax.swing.JList<>();
+        addButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,21 +110,48 @@ public class OrdinazioniPizzeria extends javax.swing.JFrame {
         welcomeText.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
         welcomeText.setText("Benvenuto ");
 
+        jScrollPane1.setViewportView(elementList);
+
+        jScrollPane2.setViewportView(addedElementList);
+
+        addButton.setText("Aggiungi");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout orderPanelLayout = new javax.swing.GroupLayout(orderPanel);
         orderPanel.setLayout(orderPanelLayout);
         orderPanelLayout.setHorizontalGroup(
             orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(orderPanelLayout.createSequentialGroup()
-                .addGap(252, 252, 252)
-                .addComponent(welcomeText)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(orderPanelLayout.createSequentialGroup()
+                        .addGap(252, 252, 252)
+                        .addComponent(welcomeText))
+                    .addGroup(orderPanelLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(orderPanelLayout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         orderPanelLayout.setVerticalGroup(
             orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(orderPanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(welcomeText)
-                .addContainerGap(446, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(orderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(addButton)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -141,6 +197,19 @@ public class OrdinazioniPizzeria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_authButtonActionPerformed
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        String element = elementList.getSelectedValue();
+        if(element != null && count!=4){
+            ingredientsModel.removeElement(element);
+            selectedModel.addElement(element);
+            removedElement.push(element);
+            count++;
+        } else{
+            JOptionPane.showMessageDialog(this, "Hai già aggiunto 4 elementi");
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -177,10 +246,15 @@ public class OrdinazioniPizzeria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JList<String> addedElementList;
     private javax.swing.JButton authButton;
     private javax.swing.JTextField authText;
+    private javax.swing.JList<String> elementList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JPanel orderPanel;
     private javax.swing.JLabel welcomeText;
