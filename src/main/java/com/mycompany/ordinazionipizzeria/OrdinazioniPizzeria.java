@@ -15,6 +15,7 @@ public class OrdinazioniPizzeria extends javax.swing.JFrame {
     Stack<String> removedElement;
     int count = 0;
     /**
+     * 
      * Creates new form OrdinazioniPizzeria
      */
     public OrdinazioniPizzeria() {
